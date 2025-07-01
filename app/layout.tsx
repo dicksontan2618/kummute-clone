@@ -32,7 +32,7 @@ export default function RootLayout({
         <div className="sm:hidden">
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
