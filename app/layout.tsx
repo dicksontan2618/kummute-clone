@@ -37,7 +37,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <main className="min-h-screen max-w-screen">
-              <nav className="w-full fixed h-[7vh] bg-[#1eb0e6] flex flex-col items-center justify-center">
+              <nav className="w-full fixed h-[7vh] bg-[#3cccca] flex flex-col items-center justify-center">
                 <div className="w-full max-w-5xl flex justify-center items-center p-3 px-5 text-sm">
                   <div className="flex gap-5 items-center justify-center font-semibold">
                     <Image src={logo} alt="Logo" width={55} height={55}/>
