@@ -46,21 +46,21 @@ export default function DecisionPage() {
     fetchUsers();
   }, []);
 
+  const fetchInitialSeatData = async () => {
+    const { data, error } = await supabase
+      .from('rides')
+      .select('seats_left')
+      .eq('id', 1)
+      .single();
+    
+    if (data) {
+      setSeatCount(data.seats_left);
+    }
+    setIsLoadingSeats(false);
+  };
+
   // New useEffect for seat availability with realtime updates
   useEffect(() => {
-    const fetchInitialSeatData = async () => {
-      const { data, error } = await supabase
-        .from('rides')
-        .select('seats_left')
-        .eq('id', 1)
-        .single();
-      
-      if (data) {
-        setSeatCount(data.seats_left);
-      }
-      setIsLoadingSeats(false);
-    };
-
     // Subscribe to realtime changes
     const channel = supabase
       .channel('rides-changes')
@@ -72,7 +72,6 @@ export default function DecisionPage() {
           table: 'rides'
         },
         (payload) => {
-          console.log('Realtime update received:', payload);
           if (payload.new && payload.new.seats_left !== undefined) {
             setSeatCount(payload.new.seats_left);
           }
@@ -98,15 +97,11 @@ export default function DecisionPage() {
     try {
       const result = await startRide();
       if (result.success) {
-        console.log("Ride booked successfully!");
         setBooked(true);
       } else {
-        console.error("Failed to book ride:", result.error);
-        // You could show an error message to the user here
         alert("Failed to book ride. Please try again.");
       }
     } catch (error) {
-      console.error("Error booking ride:", error);
       alert("An error occurred while booking. Please try again.");
     } finally {
       setIsBookingRide(false);
@@ -118,16 +113,11 @@ export default function DecisionPage() {
     try {
       const result = await endRide();
       if (result.success) {
-        console.log("Ride ended successfully!");
-        // setBooked(false);
         router.push('/home'); // Redirect to home after ending ride
       } else {
-        console.error("Failed to end ride:", result.error);
-        // You could show an error message to the user here
         alert("Failed to end ride. Please try again.");
       }
     } catch (error) {
-      console.error("Error ending ride:", error);
       alert("An error occurred while ending. Please try again.");
     }
   };
@@ -306,7 +296,7 @@ export default function DecisionPage() {
                     objectFit: 'cover',
                   }}
                 />
-                <p className='font-medium'>Jeremy Thomas - 4.8 ⭐</p>
+                <p className='font-medium'>Dickson Tan - 4.8 ⭐</p>
               </div>
               <div className='flex flex-col text-right'>
                 <p className='font-bold text-xl'>PRF 5463</p>

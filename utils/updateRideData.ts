@@ -14,7 +14,6 @@ export async function startRide(): Promise<{ success: boolean; error?: string }>
             .single();
             
         if (fetchError) {
-            console.error("Error fetching current ride data:", fetchError);
             return { success: false, error: "Failed to fetch current ride data" };
         }
         
@@ -28,15 +27,12 @@ export async function startRide(): Promise<{ success: boolean; error?: string }>
             .single();
         
         if (updateError) {
-            console.error("Error starting ride:", updateError);
             return { success: false, error: "Failed to start ride" };
         }
         
-        console.log(`Ride started. Seats left decreased to: ${newSeatsLeft}`);
         return { success: true };
         
     } catch (error) {
-        console.error("Unexpected error in startRide:", error);
         return { success: false, error: "Unexpected error occurred" };
     }
 }
@@ -53,7 +49,6 @@ export async function endRide(): Promise<{ success: boolean; error?: string }> {
             .single();
             
         if (fetchError) {
-            console.error("Error fetching current ride data:", fetchError);
             return { success: false, error: "Failed to fetch current ride data" };
         }
         
@@ -67,15 +62,12 @@ export async function endRide(): Promise<{ success: boolean; error?: string }> {
             .single();
         
         if (updateError) {
-            console.error("Error ending ride:", updateError);
             return { success: false, error: "Failed to end ride" };
         }
         
-        console.log(`Ride ended. Seats left increased to: ${newSeatsLeft}`);
         return { success: true };
         
     } catch (error) {
-        console.error("Unexpected error in endRide:", error);
         return { success: false, error: "Unexpected error occurred" };
     }
 }
